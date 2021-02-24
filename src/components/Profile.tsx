@@ -1,4 +1,4 @@
-import styles from '../styles/pages/Profile.module.css'
+import styles from '../styles/components/Profile.module.css'
 
 const Profile = () => {
   return (
@@ -6,7 +6,9 @@ const Profile = () => {
       <img src="https://github.com/jvbs.png" alt="João Vitor"/>
       <div>
         <strong>João Vitor</strong>
-        <p>Level 1</p>
+        <p>
+          <img src="icons/level.svg" alt="Level icon"/>
+          Level 1</p>
       </div>
     </div>
   )
