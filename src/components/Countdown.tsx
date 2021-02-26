@@ -2,9 +2,13 @@ import { useState, useEffect } from 'react'
 import { start } from 'repl'
 import styles from '../styles/components/Countdown.module.css'
 
+let countdownTimeout: NodeJS.Timeout
+
 const Countdown = () => {
-  const [time, setTime] = useState(5 * 60)
-  const [active, setActive] = useState(false)
+  const [time, setTime] = useState(0.1 * 60)
+  const [isActive, setIsActive] = useState(false)
+  const [hasFinished, setHasFinished] = useState(false)
+
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
 
@@ -12,17 +16,26 @@ const Countdown = () => {
   const [secondLeft, secondRight] = String(seconds).padStart(2, '0').split('')
 
   const startCountdown = () => {
-    setActive(true)
+    setIsActive(true)
+  }
+
+  const resetCountdown = () => {
+    // console.log(countdownTimeout)
+    clearTimeout(countdownTimeout)
+    setIsActive(false)
   }
 
   useEffect(() => {
-    console.log(active)
-    if(active && time > 0){
-      setTimeout(() => {
+    // console.log(active)
+    if(isActive && time > 0){
+      countdownTimeout = setTimeout(() => {
         setTime(time-1)
       }, 1000)
+    } else if(isActive && time === 0){
+      setHasFinished(true)
+      setIsActive(false)
     }
-  }, [active, time])
+  }, [isActive, time])
 
   return (
     <div>
@@ -38,7 +51,19 @@ const Countdown = () => {
         </div>
       </div>
 
-      <button type="button" onClick={startCountdown} className={styles.countdownButton}>Iniciar um ciclo</button>
+      { hasFinished ? (
+        <button disabled onClick={startCountdown} className={styles.countdownButton}>Ciclo encerrado</button>
+      ) : (
+        <>
+          { !isActive ? (
+            <button type="button" onClick={startCountdown} className={styles.countdownButton}>Iniciar um ciclo</button>
+          ) : (
+            <button type="button" onClick={resetCountdown} className={`${styles.countdownButton} ${styles.countdownButtonActive}`}>Abandonar ciclo</button>
+          )}
+        </>
+      )}      
+
+
     </div>
   )
 }
