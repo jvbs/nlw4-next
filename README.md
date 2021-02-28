@@ -15,7 +15,6 @@
 ```
     git clone https://github.com/jvbs/nlw4-next.git
     cd nlw4-next
-
 ```
 
 2. Instale as dependências
