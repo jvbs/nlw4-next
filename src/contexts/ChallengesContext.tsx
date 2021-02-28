@@ -35,7 +35,7 @@ export const ChallengesProvider = ({ children }: ChallengesProviderProps) => {
   const [challengesCompleted, setChallengesCompleted] = useState(0)
 
   const [activeChallenge, setActiveChallenge] = useState(null)
-  João
+
   const experienceToNextLevel = Math.pow((level + 1) * 4, 2)
 
   function levelUp() {
